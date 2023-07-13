@@ -36,11 +36,34 @@ metadata$barcodes = do.call(rbind, strsplit(rownames(metadata), split = '\\-'))
 test <- join(metadata, doublet.df, by = "barcodes")
 CERVIX2@meta.data$Doublet <- test$Doublet
 
+## integration 
 cervix = merge(CERVIX1, CERVIX2)
+merge <- subset(x = merge, subset = Doublet == "singlet")
 cervix.list <- SplitObject(cervix, split.by = "orig.ident")
 cervix.list <- lapply(X = cervix.list, FUN = function(x) {
     x <- NormalizeData(x)
     x <- FindVariableFeatures(x, selection.method = "vst", nfeatures = 2000)
 })
+cervix.anchors <- FindIntegrationAnchors(object.list = cervix.list, anchor.features = features)
+cervix.combined <- IntegrateData(anchorset = cervix.anchors)
+DefaultAssay(cervix.combined) <- "integrated"
+cervix.combined <- ScaleData(cervix.combined, verbose = FALSE)
+cervix.combined <- RunPCA(cervix.combined, verbose = FALSE)
 
+pct <- cervix.combined[["pca"]]@stdev / sum(cervix.combined[["pca"]]@stdev) * 100
+cumu <- cumsum(pct)
+co1 <- which(cumu > 90 & pct < 5)[1]
+co2 <- sort(which((pct[1:length(pct) - 1] - pct[2:length(pct)]) > 0.1), decreasing = T)[1] + 1
+pcs <- min(co1, co2)
+plot_df <- data.frame(pct = pct, cumu = cumu, rank = 1:length(pct))
+
+ggplot(plot_df, aes(cumu, pct, label = rank, color = rank > pcs)) +
+  geom_text() +
+  geom_vline(xintercept = 90, color = "grey") +
+  geom_hline(yintercept = min(pct[pct > 5]), color = "grey") +
+  theme_bw()
+
+cervix.combined <- RunUMAP(cervix.combined, dims = 1:13)
+cervix.combined <- FindNeighbors(cervix.combined, dims = 1:13)
+cervix.combined <- FindClusters(cervix.combined, resolution = 0.5)
 
