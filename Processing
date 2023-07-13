@@ -1,1 +1,6 @@
+#sample info
+CERVIX1 : human cervix sample data 1
+CERVIX2 : human cervix sample data 2
 
+# Align fastq read files to GRCh38 reference genome
+cellranger count --id=SHH1 --fastqs=/home/young/scRNA_study/21_ML/deep/Han01/outs/fastq_path/HM3JNBBXY/SHH1 --sample=SHH1 --transcriptome=/home/young/scRNA_study/cell_ranger/Mus_musculus/GRCm39/
