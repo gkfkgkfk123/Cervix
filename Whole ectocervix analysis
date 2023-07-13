@@ -4,14 +4,14 @@ library(patchwork)
 library(ggplot2)
 library(pylr)
 
-# Road cellranger count processed data
+## Road cellranger count processed data
 CERVIX1 = Read10X('./CERVIX1/outs/filtered_feature_bc_matrix')
 CERVIX2 = Read10X('./CERVIX2/outs/filtered_feature_bc_matrix')
 
 CERVIX1 = CreateSeuratObject(counts = CERVIX1, project = "CERVIX1", min.features = 200, min.cells = 3)
 CERVIX2 = CreateSeuratObject(counts = CERVIX2, project = "CERVIX2", min.features = 200, min.cells = 3)
 
-# Embed scrublet results in seurat object
+## Embed scrublet results in seurat object
 #CERVIX1
 doublet.file <- "../CERVIX1/scrublet.doublet_scores_obs.txt"
 doublet.df <- read.table(doublet.file , header = F, sep = "\t")
