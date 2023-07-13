@@ -4,4 +4,34 @@ library(patchwork)
 library(ggplot2)
 library(pylr)
 
-# 
+# Road cellranger count processed data
+CERVIX1 = Read10X('./CERVIX1/outs/filtered_feature_bc_matrix')
+CERVIX2 = Read10X('./CERVIX2/outs/filtered_feature_bc_matrix')
+
+CERVIX1 = CreateSeuratObject(counts = CERVIX1, project = "CERVIX1", min.features = 200, min.cells = 3)
+CERVIX2 = CreateSeuratObject(counts = CERVIX2, project = "CERVIX2", min.features = 200, min.cells = 3)
+
+# Embed scrublet results in seurat object
+#CERVIX1
+doublet.file <- "../CERVIX1/scrublet.doublet_scores_obs.txt"
+doublet.df <- read.table(doublet.file , header = F, sep = "\t")
+colnames(doublet.df) <- c("barcodes", "scores", "threshold")
+doublet.df$Doublet <- "singlet"
+doublet.df$Doublet[doublet.df$scores > doublet.df$threshold] <- "doublet"
+doublet.df$barcodes <- do.call(rbind, strsplit(x = as.character(doublet.df$barcodes), split = "\\-"))
+metadata = data.frame(barcodes = rownames(CERVIX1@meta.data), CERVIX1@meta.data)
+metadata$barcodes = do.call(rbind, strsplit(rownames(metadata), split = '\\-'))
+test <- join(metadata, doublet.df, by = "barcodes")
+CERVIX1@meta.data$Doublet <- test$Doublet
+
+#CERVIX2
+doublet.file <- "../CERVIX2/scrublet.doublet_scores_obs.txt"
+doublet.df <- read.table(doublet.file , header = F, sep = "\t")
+colnames(doublet.df) <- c("barcodes", "scores", "threshold")
+doublet.df$Doublet <- "singlet"
+doublet.df$Doublet[doublet.df$scores > doublet.df$threshold] <- "doublet"
+doublet.df$barcodes <- do.call(rbind, strsplit(x = as.character(doublet.df$barcodes), split = "\\-"))
+metadata = data.frame(barcodes = rownames(CERVIX2@meta.data), CERVIX2@meta.data)
+metadata$barcodes = do.call(rbind, strsplit(rownames(metadata), split = '\\-'))
+test <- join(metadata, doublet.df, by = "barcodes")
+CERVIX2@meta.data$Doublet <- test$Doublet
