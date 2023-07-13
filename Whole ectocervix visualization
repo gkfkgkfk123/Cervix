@@ -1,0 +1,8 @@
+
+
+ggplot(data2, aes(x='',y=value,fill=group))
++geom_bar(width=0.1,stat='identity',color='white')
++coord_polar('y')
++theme_void()
++theme(legend.text=element_text(size=25, color="black"))
++scale_fill_manual(values=c("#33CC00", "#0099FF", "#FF6666"))
