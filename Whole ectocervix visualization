@@ -1,8 +1,19 @@
+## Pie chart
+group <- c('Epithelial','Immune','Endothelial')
+value <- c(94.3,5.5,0.2)
+df <- data.frame(group, value)
 
-
-ggplot(data2, aes(x='',y=value,fill=group))
+ggplot(df, aes(x='',y=value,fill=group))
 +geom_bar(width=0.1,stat='identity',color='white')
 +coord_polar('y')
 +theme_void()
 +theme(legend.text=element_text(size=25, color="black"))
 +scale_fill_manual(values=c("#33CC00", "#0099FF", "#FF6666"))
+
+## Heat map
+# Obtain cell type specific Differentially expressed genes.
+cervixDEGs <- FindAllMarkers(object = cervix, only.pos = T, min.pct = 0.25, logfc.threshold = 0.25)
+
+DoHeatmap(object = cervix, features = c('CXCL14','KRT19','KRT15','COL17A1','DCN','CENPF','MKI67','HMGB2','TOP2A','TUBA1B','HIST1H4C','PTTG1','UBE2C','LY6D','MT1X','LGALS7','DEFB1','KRT5','S100A9','S100A8','SPRR3','KRTDAP','KRT6C')) 
++NoLegend()
++theme(text = element_text(size = 15))
