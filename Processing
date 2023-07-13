@@ -1,12 +1,12 @@
-# sample info
+## sample info
 CERVIX1 : human cervix sample data 1
 CERVIX2 : human cervix sample data 2
 
-# Align fastq read files to GRCh38 reference genome
+## Align fastq read files to GRCh38 reference genome
 cellranger count --id=CERVIX1 --fastqs=../CERVIX1/fastq files --sample=CERVIX1 --transcriptome=../GRCh38ref/
 cellranger count --id=CERVIX2 --fastqs=../CERVIX2/fastq files --sample=CERVIX2 --transcriptome=../GRCh38ref/
 
-# Scrublet in python (remove doublet cells)
+## Scrublet in python (remove doublet cells)
 import sys
 import os
 import scrublet as scr
@@ -32,7 +32,7 @@ scrub_sim = pd.DataFrame({ "doublet_scores_sim" : scrub.doublet_scores_sim_, "th
 scrub_obs.to_csv(out_dir + "/scrublet.doublet_scores_obs.txt", index = False, header = None, sep = "\t")
 scrub_sim.to_csv(out_dir + "/scrublet.doublet_scores_sim.txt", index = False, header = None, sep = "\t")
 
-# Scrublet in R (remove doublet cells)
+## Scrublet in R (remove doublet cells)
 cellranger.dir = '../#CERVIX1-2/outs/filtered_feature_bc_matrix'
 scrublet.script <- '../run_scrublet.py'
 outdir <- "../#SHH1-8"
