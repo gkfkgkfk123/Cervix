@@ -35,3 +35,12 @@ metadata = data.frame(barcodes = rownames(CERVIX2@meta.data), CERVIX2@meta.data)
 metadata$barcodes = do.call(rbind, strsplit(rownames(metadata), split = '\\-'))
 test <- join(metadata, doublet.df, by = "barcodes")
 CERVIX2@meta.data$Doublet <- test$Doublet
+
+cervix = merge(CERVIX1, CERVIX2)
+cervix.list <- SplitObject(cervix, split.by = "orig.ident")
+cervix.list <- lapply(X = cervix.list, FUN = function(x) {
+    x <- NormalizeData(x)
+    x <- FindVariableFeatures(x, selection.method = "vst", nfeatures = 2000)
+})
+
+
