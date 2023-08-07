@@ -1,3 +1,4 @@
+## CellChat analysis
 library(CellChat)
 library(patchwork)
 
@@ -23,3 +24,11 @@ groupSize_cervix <- as.numeric(table(cellchat_cervix@idents))
 
 netVisual_circle(cellchat_cervix@net$count, vertex.weight = groupSize_cervix, weight.scale = T, label.edge= F, title.name = "Number of Interactions",vertex.label.cex=2,arrow.size=0.5)
 netVisual_circle(cellchat_cervix@net$weight, vertex.weight = groupSize_cervix, weight.scale = T, label.edge= F, title.name = "Weight of Interactions",vertex.label.cex=2,arrow.size=0.5)
+
+# Sender/Reciever heat map
+netVisual_heatmap(cellchat_cervix, signaling = 'CCL', color.heatmap = "Reds")
+netVisual_heatmap(cellchat_cervix, signaling = 'NOTCH', color.heatmap = "Reds")
+
+# Ligand - Receptor pair bubble plot
+netVisual_bubble(cellchat_cervix, sources.use = c(1:5), targets.use = c(1:5), signaling = 'CCL', remove.isolate = T)
+netVisual_bubble(cellchat_cervix, sources.use = c(1:5), targets.use = c(1:5), signaling = 'NOTCH', remove.isolate = T)
