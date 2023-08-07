@@ -39,4 +39,31 @@ ggdotchart(topDEGs, x = "genes", y = "avg_log2FC",
            )+
   geom_hline(yintercept = 0, linetype = 2, color = "lightgray")
 
+## Violin plot (Basal vs Suprabasal DEGs)
+# Subset only basal and suprabasal cells
+basal_epithelial <- subset(x = epithelial, subset = celltype == c('Basal','Suprabasal'))
+
+plot_grid((VlnPlot(basal_epithelial,features='CXCL14',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
+(VlnPlot(cervixSvsB,features='KRT19',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
+(VlnPlot(cervixSvsB,features='COL17A1',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
+(VlnPlot(cervixSvsB,features='KRT15',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
+(VlnPlot(cervixSvsB,features='DST',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
+(VlnPlot(cervixSvsB,features='DCN',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
+(VlnPlot(cervixSvsB,features='IL1R2',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
+(VlnPlot(cervixSvsB,features='CLU',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
+(VlnPlot(cervixSvsB,features='IFITM3',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
+(VlnPlot(cervixSvsB,features='CCL2',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()))
+
+plot_grid((VlnPlot(basal_epithelial,features='S100A9',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
+(VlnPlot(cervixSvsB,features='S100A8',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
+(VlnPlot(cervixSvsB,features='KRT1',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
+(VlnPlot(cervixSvsB,features='KRT6A',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
+(VlnPlot(cervixSvsB,features='KRT13',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
+(VlnPlot(cervixSvsB,features='SPRR1B',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
+(VlnPlot(cervixSvsB,features='CSTA',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
+(VlnPlot(cervixSvsB,features='LY6D',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
+(VlnPlot(cervixSvsB,features='KRT6C',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
+(VlnPlot(cervixSvsB,features='SERPINB3',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()))
+
+
 
