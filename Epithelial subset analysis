@@ -29,8 +29,8 @@ ggplot(plot_df, aes(cumu, pct, label = rank, color = rank > pcs)) +
   theme_bw()
 
 # Dims
-epithelial <- RunUMAP(epithelial, dims = 1:14)
-epithelial <- FindNeighbors(epithelial, dims = 1:14)
+epithelial <- RunUMAP(epithelial, dims = 1:15)
+epithelial <- FindNeighbors(epithelial, dims = 1:15)
 epithelial <- FindClusters(epithelial, resolution = 0.5)
 
 # Cell cycle gene scoring
