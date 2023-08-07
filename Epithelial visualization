@@ -44,6 +44,20 @@ REACTOME_suprabasal <- read.xlsx('../REACTOME_suprabasal.xlsx', header = T)
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
  labs(title = 'REACTOME pathways - Suprabasal',x='')+coord_flip() +labs(fill='P-value')+scale_fill_gradient(low="red", high="blue") + theme(axis.text = element_text(size = 12),title=element_text(size=15))
 
+# UMAP expression plot of representative cell surface marker genes
+FeaturePlot(epithelial, features = 'ITGB4', raster = F, order = T)
+FeaturePlot(epithelial, features = 'BCAM', raster = F, order = T)
+FeaturePlot(epithelial, features = 'CD24', raster = F, order = T)
+FeaturePlot(epithelial, features = 'CD55', raster = F, order = T)
+FeaturePlot(epithelial, features = 'CD9', raster = F, order = T)
+
+# Violin plot of representative cell surface marker genes
+VlnPlot(epithelial, features = 'ITGB4', idents = 'celltype', pt.size = 0)
+VlnPlot(epithelial, features = 'BCAM', idents = 'celltype', pt.size = 0)
+VlnPlot(epithelial, features = 'CD24', idents = 'celltype', pt.size = 0)
+VlnPlot(epithelial, features = 'CD55', idents = 'celltype', pt.size = 0)
+VlnPlot(epithelial, features = 'CD9', idents = 'celltype', pt.size = 0)
+
 # Dot chart
 topDEGs <- read.xlsx('../BvsS_topDEGs.xlsx', header = T)
 ggdotchart(topDEGs, x = "genes", y = "avg_log2FC",
