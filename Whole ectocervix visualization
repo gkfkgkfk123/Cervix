@@ -1,4 +1,4 @@
-## Pie chart
+# Pie chart
 group <- c('Epithelial','Immune','Endothelial')
 value <- c(94.3,5.5,0.2)
 df <- data.frame(group, value)
@@ -17,3 +17,21 @@ cervixDEGs <- FindAllMarkers(object = cervix, only.pos = T, min.pct = 0.25, logf
 DoHeatmap(object = cervix, features = c('CXCL14','KRT19','KRT15','COL17A1','DCN','CENPF','MKI67','HMGB2','TOP2A','TUBA1B','HIST1H4C','PTTG1','UBE2C','LY6D','MT1X','LGALS7','DEFB1','KRT5','S100A9','S100A8','SPRR3','KRTDAP','KRT6C')) 
 +NoLegend()
 +theme(text = element_text(size = 15))
+
+# Dot chart
+topDEGs <- read.xlsx('../BvsS_topDEGs.xlsx', header = T)
+ggdotchart(topDEGs, x = "genes", y = "avg_log2FC",
+           color = "diffexpressed",                                #
+           palette = c("#00AFBB","#FC4E07"), # Custom color palette
+                              # Sort value in descending order
+           add = "segments",                           
+           add.params = list(color = "lightgray", size = 2), 
+           group = "diffexpressed",                                
+           dot.size = 13, sorting='ascending',                              
+           label = round(plzplz4$avg_log2FC,1),                     
+           font.label = list(color = "white", size = 13,
+                             vjust = 0.5),               
+           ggtheme = theme_pubr()                     
+           )+
+  geom_hline(yintercept = 0, linetype = 2, color = "lightgray")
+
