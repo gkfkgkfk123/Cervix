@@ -35,7 +35,7 @@ scrub_sim.to_csv(out_dir + "/scrublet.doublet_scores_sim.txt", index = False, he
 # Scrublet in R (remove doublet cells)
 cellranger.dir = '../#CERVIX1-2/outs/filtered_feature_bc_matrix'
 scrublet.script <- '../run_scrublet.py'
-outdir <- "../#SHH1-8"
+outdir <- "../#CERVIX1-2"
 
 system(paste("../anaconda3/bin/python", scrublet.script, cellranger.dir, outdir, sep = " "))
 
