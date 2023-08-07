@@ -18,5 +18,11 @@ DoHeatmap(object = cervix, features = c('KRT1','S100A8','S100A9','KRT6A','SPINK5
 +NoLegend()
 +theme(text = element_text(size = 15))
 
+# Immune, Endothelial Heat map
+immune_endothelial <- subset(x = cervix, subset = celltype == c('Immune','Endothelial'))
+DoHeatmap(object = cervix, features = c('CCL5','VIM','CCL4','S100A4','PTPRC','SELE','ACKR1','IGFBP7','CSF3','CYP1B1')) 
++NoLegend()
++theme(text = element_text(size = 15))
+
 
 
