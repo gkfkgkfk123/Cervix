@@ -39,7 +39,7 @@ g2m.genes <- cc.genes$g2m.genes
 epithelial <- CellCycleScoring(epithelial, s.features = s.genes, g2m.features = g2m.genes, set.ident = TRUE)
 DimPlot(epithelial, group.by='Phase', reduction='umap',label=T)
 
-# same processes after cell cycle scoring
+# same processes after cell cycle scoring (For regressing cell cycle batch)
 epithelial <- ScaleData(epithelial, verbose = FALSE,vars.to.regress= c("percent.mt","S.Score","G2M.Score")))
 epithelial <- RunPCA(epithelial, verbose = FALSE)
 
