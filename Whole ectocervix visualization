@@ -1,3 +1,9 @@
+## UMAP projection
+# Clustering by cluster numbers
+DimPlot(cervix, group.by='seurat_clusters',label = T, label.size = 5) + NoLegend()
+# Clustering by celltype names
+DimPlot(cervix, group.by='celltype',label = T, label.size = 5) + NoLegend()
+
 # Pie chart
 group <- c('Epithelial','Immune','Endothelial')
 value <- c(94.3,5.5,0.2)
