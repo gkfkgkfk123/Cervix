@@ -10,10 +10,10 @@ DoHeatmap(object = epithelial, features = c('CXCL14','KRT19','KRT15','COL17A1','
 +NoLegend()
 +theme(text = element_text(size = 15))
 
-# UMAP expression plot of representative epithelial cell marker genes
+# UMAP expression plot of representative epithelial basal cell marker genes
 FeaturePlot(epithelial, features = c('KRT14','TP63','MKI67','CDC20','KRT1','SBSN'), raster = F, order = T)
 
-# Volcano plot
+# Volcano plot of basal VS suprabasal DEGs
 topDEGs <- read.xlsx('../BvsS_topDEGs.xlsx', header = T)
 ggplot(data=topDEGs, aes(x=avg_log2FC, y=-log10(p_val_adj), col=diffexpressed)) +
         geom_point(size=2,alpha=0.5) + 
