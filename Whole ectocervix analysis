@@ -36,7 +36,7 @@ metadata$barcodes = do.call(rbind, strsplit(rownames(metadata), split = '\\-'))
 test <- join(metadata, doublet.df, by = "barcodes")
 CERVIX2@meta.data$Doublet <- test$Doublet
 
-## integration 
+## Integration 
 cervix = merge(CERVIX1, CERVIX2)
 cervix <- subset(x = cervix, subset = Doublet == "singlet")
 cervix[["percent.mt"]] <- PercentageFeatureSet(cervix, pattern = "^MT-")
@@ -80,7 +80,7 @@ g2m.genes <- cc.genes$g2m.genes
 cervix <- CellCycleScoring(cervix, s.features = s.genes, g2m.features = g2m.genes, set.ident = TRUE)
 DimPlot(cervix, group.by='Phase', reduction='umap',label=T)
 
-# same processes after cell cycle scoring
+# Same processes after cell cycle scoring
 cervix <- ScaleData(cervix, verbose = FALSE,vars.to.regress= c("percent.mt","S.Score","G2M.Score")))
 cervix <- RunPCA(cervix, verbose = FALSE)
 
