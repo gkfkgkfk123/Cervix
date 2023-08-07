@@ -40,3 +40,15 @@ system(paste("../anaconda3/bin/python", scrublet.script, cellranger.dir, outdir,
 
 db.score <- read.table(file = paste0(outdir, "/scrublet.doublet_scores_obs.txt"), header = F, sep = "\t")
 colnames(db.score) <- c("barcodes", "scores", "threshold")
+
+# Embed scrublet results in seurat object
+doublet.file <- "../mouse/scrublet.doublet_scores_obs.txt"
+doublet.df <- read.table(doublet.file , header = F, sep = "\t")
+colnames(doublet.df) <- c("barcodes", "scores", "threshold")
+doublet.df$Doublet <- "singlet"
+doublet.df$Doublet[doublet.df$scores > doublet.df$threshold] <- "doublet"
+doublet.df$barcodes <- do.call(rbind, strsplit(x = as.character(doublet.df$barcodes), split = "\\-"))
+metadata = data.frame(barcodes = rownames(mouse_epithelial@meta.data), mouse_epithelial@meta.data)
+metadata$barcodes = do.call(rbind, strsplit(rownames(metadata), split = '\\-'))
+test <- join(metadata, doublet.df, by = "barcodes")
+mouse_epithelial@meta.data$Doublet <- test$Doublet
