@@ -4,7 +4,7 @@ library(patchwork)
 library(ggplot2)
 library(pylr)
 
-## Road cellranger count processed data
+# Road cellranger count processed data
 CERVIX1 = Read10X('./CERVIX1/outs/filtered_feature_bc_matrix')
 CERVIX2 = Read10X('./CERVIX2/outs/filtered_feature_bc_matrix')
 
@@ -36,7 +36,7 @@ metadata$barcodes = do.call(rbind, strsplit(rownames(metadata), split = '\\-'))
 test <- join(metadata, doublet.df, by = "barcodes")
 CERVIX2@meta.data$Doublet <- test$Doublet
 
-## Integration 
+# Integration 
 cervix = merge(CERVIX1, CERVIX2)
 cervix <- subset(x = cervix, subset = Doublet == "singlet")
 cervix[["percent.mt"]] <- PercentageFeatureSet(cervix, pattern = "^MT-")
