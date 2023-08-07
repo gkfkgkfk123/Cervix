@@ -63,6 +63,7 @@ ggdotchart(topDEGs, x = "genes", y = "avg_log2FC",
 ## Violin plot (Basal vs Suprabasal DEGs)
 # Subset only basal and suprabasal cells
 basal_epithelial <- subset(x = epithelial, subset = celltype == c('Basal','Suprabasal'))
+Idents(basal_epithelial) <- basal_epithelial@meta.data$celltype
 
 plot_grid((VlnPlot(basal_epithelial,features='CXCL14',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
 (VlnPlot(cervixSvsB,features='KRT19',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
