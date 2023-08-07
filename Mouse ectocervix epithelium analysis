@@ -52,3 +52,41 @@ metadata = data.frame(barcodes = rownames(mouse_epithelial@meta.data), mouse_epi
 metadata$barcodes = do.call(rbind, strsplit(rownames(metadata), split = '\\-'))
 test <- join(metadata, doublet.df, by = "barcodes")
 mouse_epithelial@meta.data$Doublet <- test$Doublet
+
+# QC
+mouse_epithelial[["percent.mt"]] <- PercentageFeatureSet(mouse_epithelial, pattern = "^Mt-")
+VlnPlot(object = mouse_epithelial, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+mouse_epithelial <- subset(x = mouse_epithelial, subset = nFeature_RNA > 200 & percent.mt < 25)
+mouse_epithelial <- NormalizeData(object = mouse_epithelial, normalization.method = "LogNormalize", scale.factor = 10000)
+mouse_epithelial <- FindVariableFeatures(mouse_epithelial, selection.method = "vst", nfeatures = 2000)
+mouse_epithelial <- ScaleData(object = mouse_epithelial, vars.to.regress = c('percent.mt'), features = rownames(mouse_epithelial))
+mouse_epithelial <- RunPCA(mouse_epithelial)
+
+# Find proper PCs
+pct <- mouse_epithelial[["pca"]]@stdev / sum(mouse_epithelial[["pca"]]@stdev) * 100
+
+cumu <- cumsum(pct)
+co1 <- which(cumu > 90 & pct < 5)[1]
+co2 <- sort(which((pct[1:length(pct) - 1] - pct[2:length(pct)]) > 0.1), decreasing = T)[1] + 1
+pcs <- min(co1, co2)
+plot_df <- data.frame(pct = pct, cumu = cumu, rank = 1:length(pct))
+
+ggplot(plot_df, aes(cumu, pct, label = rank, color = rank > pcs)) +
+  geom_text() +
+  geom_vline(xintercept = 90, color = "grey") +
+  geom_hline(yintercept = min(pct[pct > 5]), color = "grey") +
+  theme_bw()
+
+# Dims
+mouse_epithelial <- RunUMAP(mouse_epithelial, dims = 1:15)
+mouse_epithelial <- FindNeighbors(mouse_epithelial, dims = 1:15)
+mouse_epithelial <- FindClusters(mouse_epithelial, resolution = 0.5)
+
+# Cell cycle gene scoring
+s.genes <- cc.genes$s.genes
+g2m.genes <- cc.genes$g2m.genes
+mouse_epithelial <- CellCycleScoring(mouse_epithelial, s.features = s.genes, g2m.features = g2m.genes, set.ident = TRUE)
+DimPlot(mouse_epithelial, group.by='Phase', reduction='umap',label=T)
+
+
+
