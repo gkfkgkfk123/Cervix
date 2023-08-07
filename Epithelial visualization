@@ -13,7 +13,7 @@ DoHeatmap(object = epithelial, features = c('CXCL14','KRT19','KRT15','COL17A1','
 # UMAP expression plot of representative epithelial basal cell marker genes
 FeaturePlot(epithelial, features = c('KRT14','TP63','MKI67','CDC20','KRT1','SBSN'), raster = F, order = T)
 
-# Volcano plot of basal VS suprabasal DEGs
+# Volcano plot (Basal vs Suprabasal DEGs)
 topDEGs <- read.xlsx('../BvsS_topDEGs.xlsx', header = T)
 ggplot(data=topDEGs, aes(x=avg_log2FC, y=-log10(p_val_adj), col=diffexpressed)) +
         geom_point(size=2,alpha=0.5) + 
@@ -29,12 +29,26 @@ ggplot(data=topDEGs, aes(x=avg_log2FC, y=-log10(p_val_adj), col=diffexpressed)) 
         geom_text_repel(data=head(plzplz4,10),aes(label=delabel),max.overlaps=10,size=4.7,color='red')+
         geom_text_repel(data=tail(plzplz4,10),aes(label=delabel),max.overlaps=10,size=4.7,color='blue')
 
+# GSEA bar plot (Basal vs Suprabasal DEGs) by HALLMARK, REACTOME collections
+HALLMARK_basal <- read.xlsx('../HALLMARK_basal.xlsx', header = T)
+  ggplot(data= HALLMARK_basal, aes(reorder(NAME,NES),NES)) + geom_bar(stat = 'identity',aes(fill="NOM.p.val")) + 
+  scale_fill_viridis_c() +
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+ labs(title = 'HALLMARK pathways - Basal',x='')+coord_flip() +labs(fill='P-value')+scale_fill_gradient(low="red", high="blue") + theme(axis.text = element_text(size = 12),title=element_text(size=15))
+
+REACTOME_suprabasal <- read.xlsx('../REACTOME_suprabasal.xlsx', header = T)
+  ggplot(data= REACTOME_suprabasal, aes(reorder(NAME,NES),NES)) + geom_bar(stat = 'identity',aes(fill="NOM.p.val")) + 
+  scale_fill_viridis_c() +
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+ labs(title = 'REACTOME pathways - Suprabasal',x='')+coord_flip() +labs(fill='P-value')+scale_fill_gradient(low="red", high="blue") + theme(axis.text = element_text(size = 12),title=element_text(size=15))
+
 # Dot chart
 topDEGs <- read.xlsx('../BvsS_topDEGs.xlsx', header = T)
 ggdotchart(topDEGs, x = "genes", y = "avg_log2FC",
-           color = "diffexpressed",                                #
-           palette = c("#00AFBB","#FC4E07"), # Custom color palette
-                              # Sort value in descending order
+           color = "diffexpressed",                                
+           palette = c("#00AFBB","#FC4E07"),
            add = "segments",                           
            add.params = list(color = "lightgray", size = 2), 
            group = "diffexpressed",                                
@@ -71,6 +85,7 @@ plot_grid((VlnPlot(basal_epithelial,features='S100A9',pt.size=0)+theme(axis.text
 (VlnPlot(cervixSvsB,features='LY6D',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
 (VlnPlot(cervixSvsB,features='KRT6C',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
 (VlnPlot(cervixSvsB,features='SERPINB3',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()))
+
 
 
 
