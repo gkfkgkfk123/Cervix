@@ -6,5 +6,21 @@ DoHeatmap(object = epithelial, features = c('CXCL14','KRT19','KRT15','COL17A1','
 +NoLegend()
 +theme(text = element_text(size = 15))
 
+# Dot chart
+topDEGs <- read.xlsx('../BvsS_topDEGs.xlsx', header = T)
+ggdotchart(topDEGs, x = "genes", y = "avg_log2FC",
+           color = "diffexpressed",                                #
+           palette = c("#00AFBB","#FC4E07"), # Custom color palette
+                              # Sort value in descending order
+           add = "segments",                           
+           add.params = list(color = "lightgray", size = 2), 
+           group = "diffexpressed",                                
+           dot.size = 13, sorting='ascending',                              
+           label = round(plzplz4$avg_log2FC,1),                     
+           font.label = list(color = "white", size = 13,
+                             vjust = 0.5),               
+           ggtheme = theme_pubr()                     
+           )+
+  geom_hline(yintercept = 0, linetype = 2, color = "lightgray")
 
 
