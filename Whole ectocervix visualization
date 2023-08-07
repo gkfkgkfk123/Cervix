@@ -30,5 +30,7 @@ DoHeatmap(object = cervix, features = c('CCL5','VIM','CCL4','S100A4','PTPRC','SE
 +NoLegend()
 +theme(text = element_text(size = 15))
 
+# UMAP expression plot of representative ectocervix cell type marker genes
+FeaturePlot(cervix, features = c('EPCAM','PECAM1','PTPRC','COL1A1','MSLN'), raster = F, order = T) + NoLegend()
 
 
