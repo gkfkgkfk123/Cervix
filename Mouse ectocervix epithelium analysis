@@ -88,5 +88,17 @@ g2m.genes <- cc.genes$g2m.genes
 mouse_epithelial <- CellCycleScoring(mouse_epithelial, s.features = s.genes, g2m.features = g2m.genes, set.ident = TRUE)
 DimPlot(mouse_epithelial, group.by='Phase', reduction='umap',label=T)
 
+# Assign cell type annotation to each cluster
+mouse_epithelial@meta.data$celltype[mouse_epithelial@meta.data$seurat_clusters==0] <- 'Basal'
+mouse_epithelial@meta.data$celltype[mouse_epithelial@meta.data$seurat_clusters==1] <- 'Basal'
+mouse_epithelial@meta.data$celltype[mouse_epithelial@meta.data$seurat_clusters==2] <- 'Blood Cells'
+mouse_epithelial@meta.data$celltype[mouse_epithelial@meta.data$seurat_clusters==3] <- 'Suprabasal'
+mouse_epithelial@meta.data$celltype[mouse_epithelial@meta.data$seurat_clusters==4] <- 'Suprabasal'
+mouse_epithelial@meta.data$celltype[mouse_epithelial@meta.data$seurat_clusters==5] <- 'Basal'
+mouse_epithelial@meta.data$celltype[mouse_epithelial@meta.data$seurat_clusters==6] <- 'Proliferating'
+mouse_epithelial@meta.data$celltype[mouse_epithelial@meta.data$seurat_clusters==7] <- 'Blood Cells'
+mouse_epithelial@meta.data$celltype[mouse_epithelial@meta.data$seurat_clusters==8] <- 'Proliferating'
+mouse_epithelial@meta.data$celltype[mouse_epithelial@meta.data$seurat_clusters==9] <- 'Basal'
+mouse_epithelial@meta.data$celltype[mouse_epithelial@meta.data$seurat_clusters==10] <- 'Blood Cells'
 
 
