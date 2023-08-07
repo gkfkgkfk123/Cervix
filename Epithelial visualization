@@ -1,1 +1,10 @@
+## Heat map
+# Obtain cell type specific Differentially expressed genes.
+epithelialDEGs <- FindAllMarkers(object = epithelial, only.pos = T, min.pct = 0.25, logfc.threshold = 0.25)
+
+DoHeatmap(object = epithelial, features = c('CXCL14','KRT19','KRT15','COL17A1','DCN','CENPF','MKI67','HMGB2','TOP2A','TUBA1B','HIST1H4C','PTTG1','UBE2C','LY6D','MT1X','LGALS7','DEFB1','KRT5','S100A9','S100A8','SPRR3','KRTDAP','KRT6C')) 
++NoLegend()
++theme(text = element_text(size = 15))
+
+
 
