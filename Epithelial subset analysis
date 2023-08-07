@@ -58,4 +58,36 @@ ggplot(plot_df, aes(cumu, pct, label = rank, color = rank > pcs)) +
 
 epithelial <- RunUMAP(epithelial, dims = 1:14)
 epithelial <- FindNeighbors(epithelial, dims = 1:14)
-epithelial <- FindClusters(epithelial, resolution = 0.2)
+epithelial <- FindClusters(epithelial, resolution = 2.5)
+
+# Assign cell type annotation to each cluster
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==0] <- 'Basal'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==1] <- 'Suprabasal I'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==2] <- 'Suprabasal I'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==3] <- 'Basal'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==4] <- 'Suprabasal II'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==5] <- 'Basal'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==6] <- 'Proliferating II'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==7] <- 'Suprabasal I'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==8] <- 'Basal'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==9] <- 'Suprabasal I'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==10] <- 'Suprabasal II'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==11] <- 'Basal'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==12] <- 'Suprabasal I'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==13] <- 'Suprabasal II'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==14] <- 'Suprabasal I'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==15] <- 'Basal'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==16] <- 'Suprabasal II'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==17] <- 'Proliferating II'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==18] <- 'Suprabasal II'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==19] <- 'Proliferating I'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==20] <- 'Proliferating II'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==21] <- 'Proliferating II'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==22] <- 'Suprabasal II'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==23] <- 'Proliferating II'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==24] <- 'Suprabasal II'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==25] <- 'Basal'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==26] <- 'Suprabasal I'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==27] <- 'Basal'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==28] <- 'Suprabasal II'
+cervix@meta.data$celltype[cervix@meta.data$seurat_clusters==29] <- 'Basal'
