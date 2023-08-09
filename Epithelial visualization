@@ -101,6 +101,8 @@ plot_grid((VlnPlot(basal_epithelial,features='S100A9',pt.size=0)+theme(axis.text
 (VlnPlot(cervixSvsB,features='KRT6C',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()),
 (VlnPlot(cervixSvsB,features='SERPINB3',pt.size=0)+theme(axis.text.x=element_text(size=15))+NoLegend()))
 
+# YAP1 downstream gene UMAP expression feature plot
+FeaturePlot(epithelial, features = c('MYOF','AMOTL2','LATS2','CTGF','CYR61','ASAP1','AXL','F3','IGFBP3','CRIM1','FJX1','GADD45A','CCDC80','NT5E','DOCK5','PTPN14','ARHGEF17','NUAK2','TGFB2','RBMS3', raster = F, order = T)
 
 
 
