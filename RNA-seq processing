@@ -1,0 +1,17 @@
+# STAR Generate genome indexes on linux 
+mkdir IndexingOutDir
+STAR --runThreadN 6
+--runMode genomeGenerate
+--genomeDir ../IndexingOutDir
+--genomeFastaFiles ../ReferenceGenomeDir
+--sjdbGTFfile ../annotations.gtf
+--sjdbOverhang ReadLength-1
+
+# STAR alignment on linux (#VP/#LA)
+STAR --genomeDir ../IndexingOutDir
+--runThreadN 6 
+--readFilesCommand zcat 
+--readFilesIn ../#VP#LA/sample_#VP#LA_1.fq.gz ../#VP#LA/sample_#VP#LA_2.fq.gz
+--outFileNamePrefix ../AlignOutDir/#VP#LA_AlignOut
+--outSAMtype BAM SortedByCoordinate 
+
