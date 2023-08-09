@@ -43,3 +43,5 @@ ggplot(GOBP_#VP/#LA/#HCl/#Control_GSEA, aes(x=NAME, y=NES, fill = group))+
   theme(axis.title.x = element_text(size = 25, family = 'Arial'), axis.title.y = element_text(size = 25, family = 'Arial')) + theme(legend.title = element_blank()) +
   theme(axis.text.x = element_text(size = 25, family = 'Arial'), axis.text.y = element_text(size =26, family = 'Arial'))
 
+## PCA dimensional plot
+# 50-62 lines in 'RNA-seq processing' code file
