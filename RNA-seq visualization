@@ -1,1 +1,8 @@
-
+# Heatmap
+library(pheatmap)
+class_col <- list(Diagnosis=c("grey","orange"))
+sample.class<-c(rep("HCL",3),rep("LA",3))
+sample.colors<-c(rep("blue",3),rep("red",3))
+pheatmap(rawdata[mat$Gene_Name,], treeheight_row=0,
+         scale = "row", show_rownames = F, show_colnames = T,
+         colorRampPalette(c("blue", "white", "red"))(100),cluster_cols=F,fontsize_col=25 )
